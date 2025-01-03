@@ -1,0 +1,319 @@
+## Aleksas Slavinskas Connect-4 Python task - this program allows for users to play the Conenct-4 game
+## COPYRIGHT ALEKSAS SLAVINSKAS
+
+print("Starting Game")
+
+
+def Highscore2(currentplayer, highscore, player1, player2):
+    if currentplayer == 1:
+        with open("Highscore.txt", "w") as outfile:
+            outfile.write(f"{player1}: {highscore}")
+
+        with open("Highscore.txt", "r"):
+            highscore = int(highscore)
+            print(f"Current high score for {player1} is: {highscore}")
+    if currentplayer == 2:
+        with open("Highscore.txt", "w") as outfile:
+            outfile.write(f"{player2}: {highscore}")
+
+        with open("Highscore.txt", "r"):
+            highscore = int(highscore)
+            print(f"Current high score for {player2} is: {highscore}")
+
+def initialize_board():
+    board = [[0]*7 for _ in range(6)]
+    return board
+
+def print_board(board):
+    for row in board:
+        print(row)
+
+
+def action(board, player, column):
+    for row in range(5, -1, -1):
+        if board[row][column] == 0:
+            board[row][column] = player
+            return True
+    return False
+
+
+def check_vertical(board, player):
+    for col_x in range(len(board[0])):
+        count = 0
+        for row_x in range(len(board)):
+            if board[row_x][col_x] == player:
+                count = count + 1
+                if count == 4:
+                    return True
+            else:
+                count = 0
+    return False
+
+
+def check_horizontal(board, player):
+    for row in board:
+        count = 0
+        for element in row:
+            if element == player:
+                count = count + 1
+                if count == 4:
+                    return True
+            else:
+                count = 0
+    return False
+
+while True:
+    players = int(input("Choose number of players (2 or 3): ", ))
+    if players == 2:
+        print("2 player mode chosen")
+        player1 = input("Enter name for player 1: ")
+        player2 = input("Enter name for player 2: ")
+        break
+    elif players == 3:
+        print("3 player mode chosen")
+        player1 = input("Enter name for player 1: ")
+        player2 = input("Enter name for player 2: ")
+        player3 = input("Enter name for player 3: ")
+        break
+    else:
+        print("Error: Invalid number of players. Please choose 2 or 3.")
+
+if players==2:
+    def connect4_2player():
+        def get_game_mode(player):
+            mode = input(player+ ", choose game mode (3 or 4 or 5): ")
+            if mode in ("3","4", "5"):
+                return int(mode)
+            else:
+                print("Invalid input. Please choose 3 or 4 or 5.")
+                return get_game_mode(player)
+
+        if players == 2:
+            mode = get_game_mode(player1)
+            if mode == 3:
+                print("2-player Connect 3 game starting...")
+
+                def action(board, player, column):
+                    for row in range(5, -1, -1):
+                        if board[row][column] == 0:
+                            board[row][column] = player
+                            return True
+                    return False
+
+                def check_horizontal3(board, player):
+                    for row in board:
+                        count = 0
+                        for element in row:
+                            if element == player:
+                                count = count + 1
+                                if count == 3:
+                                    return True
+                            else:
+                                count = 0
+                    return False
+
+                def check_vertical3(board, player):
+                    for col_x in range(len(board[0])):
+                        count = 0
+                        for row_x in range(len(board)):
+                            if board[row_x][col_x] == player:
+                                count = count + 1
+                                if count == 3:
+                                    return True
+                            else:
+                                count = 0
+                    return False
+
+                board = initialize_board()
+                print_board(board)
+                moves=0
+                currentplayer = 1
+
+                initialize_board()
+                while True:
+                        column = int(input("Choose column 0-6: "))
+                        moves = moves + 1
+                        highscore = 105 - moves
+                        if column in range(7):
+                            if action(board, currentplayer, column):
+                                print_board(board)
+                                if check_vertical3(board, currentplayer) or check_horizontal3(board, currentplayer):
+                                    if currentplayer == 1:
+                                        print("Player", player1, "wins")
+                                    if currentplayer == 2:
+                                        print("Player", player2, "wins")
+
+                                    Highscore2(currentplayer, highscore, player1, player2)
+                                    break
+                                currentplayer = 3 - currentplayer
+                            else:
+                                print("Column full, choose another")
+                        else:
+                            print("Invalid input. Choose a number between 0-6.")
+            elif mode == 5:
+                print("2-player Connect 5 game starting...")
+
+                def action(board, player, column):
+                    for row in range(5, -1, -1):
+                        if board[row][column] == 0:
+                            board[row][column] = player
+                            return True
+                    return False
+
+                def check_horizontal5(board, player):
+                    for row in board:
+                        count = 0
+                        for element in row:
+                            if element == player:
+                                count = count + 1
+                                if count == 5:
+                                    return True
+                            else:
+                                count = 0
+                    return False
+
+                def check_vertical5(board, player):
+                    for col_x in range(len(board[0])):
+                        count = 0
+                        for row_x in range(len(board)):
+                            if board[row_x][col_x] == player:
+                                count = count + 1
+                                if count == 5:
+                                    return True
+                            else:
+                                count = 0
+                    return False
+
+                board = initialize_board()
+                print_board(board)
+                moves = 0
+                currentplayer = 1
+                initialize_board()
+                while True:
+                        column = int(input("Choose column 0-6: "))
+                        moves = moves + 1
+                        highscore = 109 - moves
+                        if column in range(7):
+                            if action(board, currentplayer, column):
+                                print_board(board)
+                                if check_vertical5(board, currentplayer) or check_horizontal5(board, currentplayer):
+                                    if currentplayer == 1:
+                                        print("Player", player1, "wins")
+                                    if currentplayer == 2:
+                                        print("Player", player2, "wins")
+                                    Highscore2(currentplayer, highscore, player1, player2)
+
+                                    break
+                                currentplayer = 3 - currentplayer
+                            else:
+                                print("Column full, choose another")
+                        else:
+                            print("Invalid input. Choose a number between 0-6.")
+            elif mode == 4:
+                print("2-player Connect 4 game starting...")
+
+                def action(board, player, column):
+                    for row in range(5, -1, -1):
+                        if board[row][column] == 0:
+                            board[row][column] = player
+                            return True
+                    return False
+
+
+                board = initialize_board()
+                print_board(board)
+                moves = 0
+                currentplayer = 1
+
+                initialize_board()
+                while True:
+                        column = int(input("Choose column 0-6: "))
+                        moves = moves + 1
+                        highscore = 107 - moves
+                        if column in range(7):
+                            if action(board, currentplayer, column):
+                                print_board(board)
+                                if check_vertical(board, currentplayer) or check_horizontal(board, currentplayer):
+                                    if currentplayer == 1:
+                                        print("Player", player1, "wins")
+                                    if currentplayer == 2:
+                                        print("Player", player2, "wins")
+
+                                    Highscore2(currentplayer, highscore, player1, player2)
+
+                                    break
+                                currentplayer = 3 - currentplayer
+                            else:
+                                print("Column full, choose another")
+                        else:
+                            print("Invalid input. Choose a number between 0-6.")
+            else:
+                print("Invalid game mode.")
+
+
+    connect4_2player()
+
+elif players == 3:
+    print("3-player Connect 4 game starting...")
+    def connect4_3player():
+
+        board = initialize_board()
+        print_board(board)
+
+        currentplayer = 1
+
+        moves = 0
+
+
+        initialize_board()
+        while True:
+                column = int(input("Choose column 0-6: "))
+                moves = moves + 1
+                highscore = 110 - moves
+                if column in range(7):
+                    if action(board, currentplayer, column):
+                        print_board(board)
+                        if check_vertical(board, currentplayer) or check_horizontal(board, currentplayer):
+                            if currentplayer == 1:
+                                print("Player", player1, "wins")
+                            if currentplayer == 2:
+                                print("Player", player2, "wins")
+                            if currentplayer == 3:
+                                print("Player", player3, "wins")
+
+
+                            def Highscore3(currentplayer, highscore, player1, player2, player3):
+                                if currentplayer == 1:
+                                    with open("Highscore.txt", "w") as outfile:
+                                        outfile.write(f"{player1}: {highscore}")
+
+                                    with open("Highscore.txt", "r"):
+                                        highscore = int(highscore)
+                                        print(f"Current high score for {player1} is: {highscore}")
+                                if currentplayer == 2:
+                                    with open("Highscore.txt", "w") as outfile:
+                                        outfile.write(f"{player2}: {highscore}")
+
+                                    with open("Highscore.txt", "r"):
+                                        highscore = int(highscore)
+                                        print(f"Current high score for {player2} is: {highscore}")
+                                if currentplayer == 3:
+                                    with open("Highscore.txt", "w") as outfile:
+                                        outfile.write(f"{player3}: {highscore}")
+
+                                    with open("Highscore.txt", "r"):
+                                        highscore = int(highscore)
+                                        print(f"Current high score for {player3} is: {highscore}")
+
+                            Highscore3(currentplayer, highscore, player1, player2, player3)
+
+                            break
+                        if currentplayer < 3:
+                            currentplayer = currentplayer + 1
+                        else:
+                            currentplayer = 1
+                    else:
+                        print("Column full, choose another")
+                else:
+                    print("Invalid input. Choose a number between 0-6.")
+    connect4_3player()
